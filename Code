@@ -1,0 +1,49 @@
+/* 
+Automatic Pump Controller
+Electromaniac 
+*/ 
+//Libraries Initialization
+
+//  Pin Assignment
+int B_Sensor  =  0;
+//  pin       =  1;
+int Relay     =  2;
+//  pin       =  3;
+//  pin       =  4;
+int T_Sensor  =  5;
+
+// Variables Initialization
+int state = 0;
+        
+//Setup Initialization
+void setup()
+{     
+   pinMode(B_Sensor,INPUT);    
+   pinMode(T_Sensor,INPUT); 
+   pinMode(Relay, OUTPUT);   
+}
+
+void loop() 
+{
+    if (digitalRead(T_Sensor) == HIGH && digitalRead(B_Sensor) == HIGH)   // Pump Off
+    {
+        digitalWrite(Relay, HIGH);
+        state = 0;         
+    }  
+    if (digitalRead(T_Sensor) == LOW && digitalRead(B_Sensor) == HIGH)   
+    {
+        if (state == 1)
+        {
+            digitalWrite(Relay, LOW);    // Pump On
+        } 
+        else
+        {
+            digitalWrite(Relay, HIGH);   // Pump Off 
+        }    
+    }
+    if (digitalRead(T_Sensor) == LOW && digitalRead(B_Sensor) == LOW)     // Pump On
+    {
+        digitalWrite(Relay, LOW);  
+        state = 1;        
+    } 
+}                       
